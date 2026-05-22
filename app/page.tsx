@@ -1,65 +1,81 @@
-import Image from "next/image";
+'use client'
+import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main style={{fontFamily:'sans-serif', background:'#FFFAF6', minHeight:'100vh', display:'flex', flexDirection:'column'}}>
+      
+      {/* NAVBAR */}
+      <nav style={{background:'#FFFAF6', padding:'10px 20px', display:'flex', justifyContent:'space-between', alignItems:'center', borderBottom:'1px solid #FFE8D6'}}>
+        <div style={{fontSize:'16px', fontWeight:800, color:'#0ABFBC'}}>👕 QRTEE</div>
+        <Link href="/order" style={{background:'#1A1A1A', color:'white', padding:'8px 16px', borderRadius:'20px', fontSize:'12px', fontWeight:800, textDecoration:'none'}}>
+          Créer mon tee-shirt →
+        </Link>
+      </nav>
+
+      {/* HERO */}
+      <div style={{background:'linear-gradient(160deg, #0ABFBC 0%, #0ABFBC 50%, #FFFAF6 50%)', padding:'32px 20px 24px', position:'relative'}}>
+        <div style={{display:'flex', gap:'6px', marginBottom:'12px', flexWrap:'wrap'}}>
+          <span style={{background:'#FF6B6B', color:'white', padding:'3px 10px', borderRadius:'20px', fontSize:'11px', fontWeight:600}}>NOUVEAU</span>
+          <span style={{background:'#FFD93D', color:'#854F0B', padding:'3px 10px', borderRadius:'20px', fontSize:'11px', fontWeight:600}}>100% trop drôle</span>
+          <span style={{background:'white', color:'#0ABFBC', padding:'3px 10px', borderRadius:'20px', fontSize:'11px', fontWeight:600, border:'1.5px solid #0ABFBC'}}>QR unique</span>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+        <h1 style={{fontSize:'32px', fontWeight:800, color:'white', lineHeight:1.15, marginBottom:'8px'}}>
+          Ton tee-shirt parle<br/>à <span style={{background:'#FFD93D', color:'#2C2C2A', borderRadius:'6px', padding:'0 5px'}}>ta place.</span><br/>
+          <span style={{color:'#FFD93D'}}>Enfin. 🤙</span>
+        </h1>
+        <div style={{fontSize:'13px', color:'#0ABFBC', background:'white', borderRadius:'12px', padding:'6px 14px', display:'inline-block', fontWeight:600, marginTop:'8px'}}>
+          🤙 Scanne. Rigole. Recommande.
         </div>
-      </main>
-    </div>
-  );
+      </div>
+
+      {/* CONTENU */}
+      <div style={{padding:'20px', flex:1}}>
+        <div style={{display:'flex', justifyContent:'space-around', marginBottom:'20px'}}>
+          {[['😂','Message'],['🎵','Playlist'],['💌','Secret']].map(([emoji, label]) => (
+            <div key={label} style={{width:'70px', height:'70px', border:'2px solid #0ABFBC', borderRadius:'10px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', gap:'4px'}}>
+              <span style={{fontSize:'24px'}}>{emoji}</span>
+              <p style={{fontSize:'10px', fontWeight:700, color:'#0ABFBC', margin:0}}>{label}</p>
+            </div>
+          ))}
+        </div>
+
+        <div style={{marginBottom:'20px'}}>
+          <div style={{fontSize:'12px', fontWeight:700, color:'#0ABFBC', letterSpacing:'0.08em', textTransform:'uppercase', marginBottom:'10px'}}>Comment ça marche</div>
+          {[['1','Tu crées ton compte en 30 sec','⚡'],['2','Tu mets ce que tu veux dessus','✏️'],['3','On imprime, on livre. C\'est tout.','📦']].map(([num, text, emoji]) => (
+            <div key={num} style={{display:'flex', alignItems:'center', gap:'10px', marginBottom:'8px'}}>
+              <div style={{width:'26px', height:'26px', borderRadius:'50%', background:'#FFD93D', color:'#854F0B', fontSize:'12px', fontWeight:800, display:'flex', alignItems:'center', justifyContent:'center', flexShrink:0}}>{num}</div>
+              <span style={{fontSize:'13px', color:'#2C2C2A', fontWeight:500}}>{text}</span>
+              <span style={{fontSize:'16px'}}>{emoji}</span>
+            </div>
+          ))}
+        </div>
+
+        <div style={{background:'#E6FAFA', borderRadius:'12px', padding:'12px', marginBottom:'20px'}}>
+          <div style={{fontSize:'12px', color:'#0ABFBC', fontWeight:700, marginBottom:'6px'}}>🔥 Ce que les gens mettent sur leur QR :</div>
+          <div style={{display:'flex', gap:'6px', flexWrap:'wrap'}}>
+            {['😘 "Kiss me"','🎵 Ma playlist','💬 Message secret'].map(tag => (
+              <span key={tag} style={{fontSize:'11px', background:'white', borderRadius:'8px', padding:'4px 8px', color:'#2C2C2A', fontWeight:500}}>{tag}</span>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* BOUTON PERMANENT EN BAS */}
+      <div style={{background:'#1A1A1A', padding:'14px 20px', borderTop:'2px solid #FFD93D', position:'sticky', bottom:0}}>
+        <Link href="/order" style={{display:'block', width:'100%', background:'#FF6B6B', color:'white', border:'none', padding:'15px', borderRadius:'14px', fontSize:'15px', fontWeight:800, textAlign:'center', textDecoration:'none'}}>
+          Créer mon tee-shirt →
+        </Link>
+        <div style={{display:'flex', justifyContent:'space-around', marginTop:'8px'}}>
+          {[['📦','Livré chez toi'],['🔗','QR permanent'],['✏️','Modifiable à vie']].map(([icon, text]) => (
+            <div key={text} style={{display:'flex', flexDirection:'column', alignItems:'center', gap:'2px'}}>
+              <span style={{fontSize:'14px'}}>{icon}</span>
+              <span style={{fontSize:'10px', color:'#FFD93D', fontWeight:700, textAlign:'center'}}>{text}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+    </main>
+  )
 }
