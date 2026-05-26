@@ -11,7 +11,9 @@ const supabase = createClient(
 export default function Order() {
   const router = useRouter()
   const [size, setSize] = useState('M')
+  const [firstname, setFirstname] = useState('')
   const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
   const [address, setAddress] = useState('')
   const [city, setCity] = useState('')
   const [zip, setZip] = useState('')
@@ -21,15 +23,16 @@ export default function Order() {
   const sizes = ['S', 'M', 'L', 'XL']
 
   const handleOrder = async () => {
-    if (!name || !address || !city || !zip) { alert('Remplis tous les champs !'); return }
+    if (!firstname || !name || !email || !address || !city || !zip) { alert('Remplis tous les champs !'); return }
     setLoading(true)
     const { data: { user } } = await supabase.auth.getUser()
     if (!user) { router.push('/signup'); return }
     const fullAddress = `${address}, ${zip} ${city}, ${country}`
+    const orderNumber = 'CMD-' + Date.now()
     const res = await fetch('/api/checkout', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ userId: user.id, size, name, address: fullAddress })
+      body: JSON.stringify({ userId: user.id, size, name: `${firstname} ${name}`, email, address: fullAddress, orderNumber })
     })
     const { url } = await res.json()
     window.location.href = url
@@ -37,19 +40,13 @@ export default function Order() {
 
   return (
     <main style={{fontFamily:'sans-serif', background:'#FFFAF6', minHeight:'100vh', display:'flex', flexDirection:'column'}}>
-
       <nav style={{background:'#FFFAF6', padding:'10px 20px', display:'flex', justifyContent:'space-between', alignItems:'center', borderBottom:'1px solid #FFE8D6'}}>
         <div style={{fontSize:'16px', fontWeight:800, color:'#0ABFBC'}}>👕 QRTEE</div>
       </nav>
 
       <div style={{padding:'20px', maxWidth:'500px', margin:'0 auto', width:'100%'}}>
-
-        <h1 style={{fontSize:'22px', fontWeight:800, color:'#1A1A1A', marginBottom:'4px'}}>
-          Commander mon tee-shirt 👕
-        </h1>
-        <p style={{fontSize:'13px', color:'#888', marginBottom:'24px'}}>
-          Livraison 5-7 jours · QR code permanent · Modifiable à vie
-        </p>
+        <h1 style={{fontSize:'22px', fontWeight:800, color:'#1A1A1A', marginBottom:'4px'}}>Commander mon tee-shirt 👕</h1>
+        <p style={{fontSize:'13px', color:'#888', marginBottom:'24px'}}>Livraison 5-7 jours · QR code permanent · Modifiable à vie</p>
 
         <div style={{background:'white', borderRadius:'16px', padding:'20px', border:'1px solid #FFE8D6', marginBottom:'16px', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
           <div>
@@ -73,7 +70,12 @@ export default function Order() {
         <div style={{background:'white', borderRadius:'16px', padding:'20px', border:'1px solid #FFE8D6', marginBottom:'24px'}}>
           <div style={{fontSize:'12px', fontWeight:700, color:'#1A1A1A', marginBottom:'12px'}}>📦 Infos de livraison</div>
           
-          <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Nom complet" style={{width:'100%', padding:'12px', borderRadius:'10px', border:'1.5px solid #FFE8D6', fontSize:'14px', outline:'none', boxSizing:'border-box', marginBottom:'10px', color:'#1A1A1A'}} />
+          <div style={{display:'flex', gap:'10px', marginBottom:'10px'}}>
+            <input type="text" value={firstname} onChange={e => setFirstname(e.target.value)} placeholder="Prénom" style={{width:'50%', padding:'12px', borderRadius:'10px', border:'1.5px solid #FFE8D6', fontSize:'14px', outline:'none', boxSizing:'border-box', color:'#1A1A1A'}} />
+            <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder="Nom" style={{width:'50%', padding:'12px', borderRadius:'10px', border:'1.5px solid #FFE8D6', fontSize:'14px', outline:'none', boxSizing:'border-box', color:'#1A1A1A'}} />
+          </div>
+
+          <input type="email" value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" style={{width:'100%', padding:'12px', borderRadius:'10px', border:'1.5px solid #FFE8D6', fontSize:'14px', outline:'none', boxSizing:'border-box', marginBottom:'10px', color:'#1A1A1A'}} />
           
           <input type="text" value={address} onChange={e => setAddress(e.target.value)} placeholder="Adresse (numéro et rue)" style={{width:'100%', padding:'12px', borderRadius:'10px', border:'1.5px solid #FFE8D6', fontSize:'14px', outline:'none', boxSizing:'border-box', marginBottom:'10px', color:'#1A1A1A'}} />
           
@@ -92,7 +94,6 @@ export default function Order() {
         <p style={{fontSize:'11px', color:'#888', textAlign:'center', marginTop:'12px'}}>
           🔒 Paiement sécurisé par Stripe · Apple Pay accepté
         </p>
-
       </div>
     </main>
   )
