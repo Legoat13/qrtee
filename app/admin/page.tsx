@@ -178,7 +178,7 @@ export default function Admin() {
                     <div style={{fontSize:'9px', color:'#555', marginTop:'4px'}}>QR unique</div>
                   </div>
 
-                  <div style={{flex:1, display:'flex', flexDirection:'column', gap:'6px', fontSize:'13px'}}>
+                  <div style={{flex:1, display:'flex', flexDirection:'column', gap:'6px', fontSize:'13px', color:'#1A1A1A'}}>
                     {view === 'client' ? (
                       <>
                         <div><span style={{color:'#1A1A1A'}}>👤 Nom : </span><strong>{order.name || '-'}</strong></div>
