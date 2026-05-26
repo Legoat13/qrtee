@@ -46,12 +46,12 @@ export default function Order() {
 
       <div style={{padding:'20px', maxWidth:'500px', margin:'0 auto', width:'100%'}}>
         <h1 style={{fontSize:'22px', fontWeight:800, color:'#1A1A1A', marginBottom:'4px'}}>Commander mon tee-shirt 👕</h1>
-        <p style={{fontSize:'13px', color:'#888', marginBottom:'24px'}}>Livraison 5-7 jours · QR code permanent · Modifiable à vie</p>
+        <p style={{fontSize:'13px', color:'#1A1A1A', marginBottom:'24px'}}>Livraison 5-7 jours · QR code permanent · Modifiable à vie</p>
 
         <div style={{background:'white', borderRadius:'16px', padding:'20px', border:'1px solid #FFE8D6', marginBottom:'16px', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
           <div>
             <div style={{fontSize:'14px', fontWeight:800, color:'#1A1A1A'}}>👕 Tee-shirt QRTEE</div>
-            <div style={{fontSize:'12px', color:'#888', marginTop:'4px'}}>QR code unique imprimé au dos</div>
+            <div style={{fontSize:'12px', color:'#1A1A1A', marginTop:'4px'}}>QR code unique imprimé au dos</div>
           </div>
           <div style={{fontSize:'20px', fontWeight:800, color:'#FF6B6B'}}>24,99€</div>
         </div>
@@ -60,7 +60,7 @@ export default function Order() {
           <div style={{fontSize:'12px', fontWeight:700, color:'#1A1A1A', marginBottom:'12px'}}>📏 Choisis ta taille</div>
           <div style={{display:'flex', gap:'10px'}}>
             {sizes.map(s => (
-              <button key={s} onClick={() => setSize(s)} style={{flex:1, padding:'12px', borderRadius:'10px', border: size === s ? '2px solid #FF6B6B' : '1.5px solid #FFE8D6', background: size === s ? '#FFF0F0' : 'white', color: size === s ? '#FF6B6B' : '#888', fontWeight:800, fontSize:'14px', cursor:'pointer'}}>
+              <button key={s} onClick={() => setSize(s)} style={{flex:1, padding:'12px', borderRadius:'10px', border: size === s ? '2px solid #FF6B6B' : '1.5px solid #FFE8D6', background: size === s ? '#FFF0F0' : 'white', color: size === s ? '#FF6B6B' : '#1A1A1A', fontWeight:800, fontSize:'14px', cursor:'pointer'}}>
                 {s}
               </button>
             ))}
@@ -91,7 +91,7 @@ export default function Order() {
           {loading ? 'Redirection...' : 'Payer 24,99€ →'}
         </button>
 
-        <p style={{fontSize:'11px', color:'#888', textAlign:'center', marginTop:'12px'}}>
+        <p style={{fontSize:'11px', color:'#1A1A1A', textAlign:'center', marginTop:'12px'}}>
           🔒 Paiement sécurisé par Stripe · Apple Pay accepté
         </p>
       </div>

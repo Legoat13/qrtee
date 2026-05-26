@@ -52,7 +52,7 @@ export default function Dashboard() {
 
       <nav style={{background:'#FFFAF6', padding:'10px 20px', display:'flex', justifyContent:'space-between', alignItems:'center', borderBottom:'1px solid #FFE8D6'}}>
         <div style={{fontSize:'16px', fontWeight:800, color:'#0ABFBC'}}>👕 QRTEE</div>
-        <button onClick={handleLogout} style={{background:'transparent', border:'1px solid #ccc', padding:'6px 12px', borderRadius:'20px', fontSize:'11px', cursor:'pointer', color:'#888'}}>
+        <button onClick={handleLogout} style={{background:'transparent', border:'1px solid #ccc', padding:'6px 12px', borderRadius:'20px', fontSize:'11px', cursor:'pointer', color:'#1A1A1A'}}>
           Déconnexion
         </button>
       </nav>
@@ -62,7 +62,7 @@ export default function Dashboard() {
         <h1 style={{fontSize:'22px', fontWeight:800, color:'#1A1A1A', marginBottom:'4px'}}>
           Ton dashboard 🎛️
         </h1>
-        <p style={{fontSize:'13px', color:'#888', marginBottom:'24px'}}>
+        <p style={{fontSize:'13px', color:'#1A1A1A', marginBottom:'24px'}}>
           Modifie ton contenu, il change instantanément sur ton QR code.
         </p>
 
@@ -76,7 +76,7 @@ export default function Dashboard() {
             alt="QR Code"
             style={{borderRadius:'8px'}}
           />
-          <div style={{fontSize:'11px', color:'#888', marginTop:'8px', wordBreak:'break-all'}}>
+          <div style={{fontSize:'11px', color:'#1A1A1A', marginTop:'8px', wordBreak:'break-all'}}>
             {qrUrl}
           </div>
         </div>
