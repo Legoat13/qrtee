@@ -10,6 +10,13 @@ const supabase = createClient(
 const ADMIN_PASSWORD = 'qrtee-admin-2024'
 const SITE_URL = 'https://qrtee-five.vercel.app'
 
+const STATUSES = [
+  { key: 'pending', label: '⏳ En attente', color: '#FF6B00', bg: '#FFF3E0' },
+  { key: 'production', label: '🏭 Production', color: '#0ABFBC', bg: '#E6FAFA' },
+  { key: 'shipping', label: '📦 Livraison', color: '#8B5CF6', bg: '#F3E8FF' },
+  { key: 'delivered', label: '✅ Livré', color: '#16A34A', bg: '#DCFCE7' },
+]
+
 export default function Admin() {
   const [orders, setOrders] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
@@ -17,6 +24,7 @@ export default function Admin() {
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
   const [view, setView] = useState<'client' | 'fournisseur'>('client')
+  const [updating, setUpdating] = useState<string | null>(null)
 
   const handleLogin = () => {
     if (password === ADMIN_PASSWORD) setAuth(true)
@@ -33,6 +41,28 @@ export default function Admin() {
     getOrders()
   }, [auth])
 
+  const updateStatus = async (orderId: string, status: string) => {
+    setUpdating(orderId + status)
+    const res = await fetch('/api/update-status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ orderId, status })
+    })
+    if (res.ok) {
+      setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status } : o))
+    }
+    setUpdating(null)
+  }
+
+  const getStatusStyle = (status: string) => {
+    const s = STATUSES.find(s => s.key === status) || STATUSES[0]
+    return { background: s.bg, color: s.color }
+  }
+
+  const getStatusLabel = (status: string) => {
+    return STATUSES.find(s => s.key === status)?.label || '⏳ En attente'
+  }
+
   const printAll = () => {
     const html = `
       <html>
@@ -42,59 +72,54 @@ export default function Admin() {
           * { margin: 0; padding: 0; box-sizing: border-box; }
           body { font-family: Arial, sans-serif; color: #1A1A1A; padding: 30px; }
           h1 { font-size: 20px; margin-bottom: 4px; }
-          .subtitle { font-size: 12px; color: #888; margin-bottom: 30px; }
+          .subtitle { font-size: 12px; color: #555; margin-bottom: 30px; }
           .fiche { border: 1px solid #ddd; border-radius: 8px; padding: 20px; margin-bottom: 24px; page-break-inside: avoid; }
           .fiche-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; padding-bottom: 12px; border-bottom: 1px solid #eee; }
           .order-num { background: #FFD93D; padding: 4px 12px; border-radius: 20px; font-size: 13px; font-weight: 800; }
-          .date { font-size: 12px; color: #888; }
+          .date { font-size: 12px; color: #555; }
           .content { display: flex; gap: 20px; align-items: flex-start; }
-          .product-box { width: 160px; min-width: 160px; border: 2px dashed #ddd; border-radius: 8px; height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; background: #f9f9f9; }
-          .product-label { font-size: 10px; color: #aaa; margin-bottom: 8px; }
+          .product-box { width: 160px; min-width: 160px; border: 2px dashed #ddd; border-radius: 8px; height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; background: #f9f9f9; }
           .qr-img { width: 80px; height: 80px; }
-          .qr-label { font-size: 9px; color: #aaa; margin-top: 6px; }
-          .photo-placeholder { font-size: 11px; color: #ccc; margin-bottom: 12px; text-align: center; }
+          .photo-placeholder { font-size: 11px; color: #999; margin-bottom: 12px; text-align: center; }
+          .qr-label { font-size: 9px; color: #999; margin-top: 6px; }
           .details { flex: 1; }
           .detail-row { display: flex; margin-bottom: 10px; font-size: 13px; }
-          .detail-label { width: 120px; color: #888; font-weight: 600; }
+          .detail-label { width: 120px; color: #555; font-weight: 600; }
           .detail-value { font-weight: 700; }
           .taille { font-size: 24px; font-weight: 800; color: #FF6B6B; }
-          .status { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; background: #FFF3E0; color: #FF6B00; }
           @media print { body { padding: 15px; } }
         </style>
       </head>
       <body>
         <h1>👕 QRTEE — ${view === 'client' ? 'Fiches Clients' : 'Bon de Commande Fournisseur'}</h1>
         <p class="subtitle">Généré le ${new Date().toLocaleDateString('fr-FR', {day:'2-digit', month:'long', year:'numeric'})} · ${orders.length} commande${orders.length > 1 ? 's' : ''}</p>
-
         ${orders.map(o => `
           <div class="fiche">
             <div class="fiche-header">
               <span class="order-num">${o.order_number || 'N/A'}</span>
               <span class="date">${new Date(o.created_at).toLocaleDateString('fr-FR', {day:'2-digit', month:'2-digit', year:'numeric'})}</span>
             </div>
-
             <div class="content">
               <div class="product-box">
-                <p class="photo-placeholder">📷 Photo produit<br/>à venir</p>
+                <p class="photo-placeholder">📷 Photo<br/>à venir</p>
                 <img class="qr-img" src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=${encodeURIComponent(`${SITE_URL}/u/${o.user_id}`)}" />
                 <p class="qr-label">QR code unique</p>
               </div>
-
               <div class="details">
                 ${view === 'client' ? `
                   <div class="detail-row"><span class="detail-label">Nom complet</span><span class="detail-value">${o.name || '-'}</span></div>
                   <div class="detail-row"><span class="detail-label">Email</span><span class="detail-value">${o.email || '-'}</span></div>
                   <div class="detail-row"><span class="detail-label">Adresse</span><span class="detail-value">${o.address || '-'}</span></div>
                   <div class="detail-row"><span class="detail-label">Taille</span><span class="detail-value taille">${o.size}</span></div>
-                  <div class="detail-row"><span class="detail-label">Statut</span><span class="status">${o.status === 'pending' ? '⏳ En attente' : '✅ Traité'}</span></div>
-                  <div class="detail-row"><span class="detail-label">QR code URL</span><span class="detail-value" style="font-size:11px; color:#888;">${SITE_URL}/u/${o.user_id}</span></div>
+                  <div class="detail-row"><span class="detail-label">Statut</span><span class="detail-value">${getStatusLabel(o.status)}</span></div>
+                  <div class="detail-row"><span class="detail-label">QR code URL</span><span class="detail-value" style="font-size:11px;">${SITE_URL}/u/${o.user_id}</span></div>
                 ` : `
                   <div class="detail-row"><span class="detail-label">N° commande</span><span class="detail-value">${o.order_number || 'N/A'}</span></div>
                   <div class="detail-row"><span class="detail-label">Client</span><span class="detail-value">${o.name || '-'}</span></div>
                   <div class="detail-row"><span class="detail-label">Taille</span><span class="detail-value taille">${o.size}</span></div>
                   <div class="detail-row"><span class="detail-label">Type produit</span><span class="detail-value">Tee-shirt (à définir)</span></div>
                   <div class="detail-row"><span class="detail-label">Couleur</span><span class="detail-value">À définir</span></div>
-                  <div class="detail-row"><span class="detail-label">QR code URL</span><span class="detail-value" style="font-size:11px; color:#888;">${SITE_URL}/u/${o.user_id}</span></div>
+                  <div class="detail-row"><span class="detail-label">QR code URL</span><span class="detail-value" style="font-size:11px;">${SITE_URL}/u/${o.user_id}</span></div>
                   <div class="detail-row"><span class="detail-label">Instructions</span><span class="detail-value" style="font-size:11px;">Imprimer le QR code au dos du tee-shirt. Chaque QR code est unique.</span></div>
                 `}
               </div>
@@ -163,12 +188,33 @@ export default function Admin() {
                     </div>
                     <div style={{fontSize:'11px', color:'#1A1A1A'}}>{new Date(order.created_at).toLocaleDateString('fr-FR')}</div>
                   </div>
-                  <div style={{display:'flex', gap:'8px'}}>
-                    <div style={{background:'#E6FAFA', color:'#0ABFBC', padding:'4px 10px', borderRadius:'20px', fontSize:'12px', fontWeight:700}}>Taille {order.size}</div>
-                    <div style={{background: order.status === 'pending' ? '#FFF3E0' : '#E6FAFA', color: order.status === 'pending' ? '#FF6B00' : '#0ABFBC', padding:'4px 10px', borderRadius:'20px', fontSize:'12px', fontWeight:700}}>
-                      {order.status === 'pending' ? '⏳ En attente' : '✅ Traité'}
-                    </div>
+                  <div style={{...getStatusStyle(order.status), padding:'4px 10px', borderRadius:'20px', fontSize:'12px', fontWeight:700}}>
+                    {getStatusLabel(order.status)}
                   </div>
+                </div>
+
+                {/* BOUTONS STATUT */}
+                <div style={{display:'flex', gap:'6px', flexWrap:'wrap', marginBottom:'16px', paddingBottom:'16px', borderBottom:'1px solid #FFE8D6'}}>
+                  {STATUSES.map(s => (
+                    <button
+                      key={s.key}
+                      onClick={() => updateStatus(order.id, s.key)}
+                      disabled={order.status === s.key || updating === order.id + s.key}
+                      style={{
+                        padding:'6px 12px',
+                        borderRadius:'20px',
+                        fontSize:'11px',
+                        fontWeight:700,
+                        cursor: order.status === s.key ? 'default' : 'pointer',
+                        border: order.status === s.key ? `2px solid ${s.color}` : '1.5px solid #FFE8D6',
+                        background: order.status === s.key ? s.bg : 'white',
+                        color: order.status === s.key ? s.color : '#1A1A1A',
+                        opacity: updating === order.id + s.key ? 0.6 : 1
+                      }}
+                    >
+                      {updating === order.id + s.key ? '...' : s.label}
+                    </button>
+                  ))}
                 </div>
 
                 <div style={{display:'flex', gap:'16px', flexWrap:'wrap'}}>
