@@ -8,7 +8,7 @@ export default function Home() {
         QRTEE
       </h1>
       
-      <p style={{fontSize:'16px', color:'#888', marginBottom:'32px', maxWidth:'400px', lineHeight:1.6}}>
+      <p style={{fontSize:'16px', color:'white', marginBottom:'32px', maxWidth:'400px', lineHeight:1.6}}>
         Quelque chose d'unique arrive bientôt.<br/>
         Le tee-shirt qui te ressemble vraiment.
       </p>

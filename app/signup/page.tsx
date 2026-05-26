@@ -41,7 +41,7 @@ export default function Signup() {
           <h1 style={{fontSize:'24px', fontWeight:800, color:'#1A1A1A', marginBottom:'8px', textAlign:'center'}}>
             Crée ton tee-shirt 👕
           </h1>
-          <p style={{fontSize:'13px', color:'#888', textAlign:'center', marginBottom:'24px'}}>
+          <p style={{fontSize:'13px', color:'#1A1A1A', textAlign:'center', marginBottom:'24px'}}>
             30 secondes et c'est parti 🚀
           </p>
 
@@ -81,7 +81,7 @@ export default function Signup() {
             {loading ? 'Création...' : 'Créer mon compte →'}
           </button>
 
-          <p style={{fontSize:'11px', color:'#888', textAlign:'center', marginTop:'16px'}}>
+          <p style={{fontSize:'11px', color:'#1A1A1A', textAlign:'center', marginTop:'16px'}}>
             En créant un compte tu acceptes nos conditions d'utilisation
           </p>
         </div>
