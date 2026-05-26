@@ -129,7 +129,7 @@ export default function Admin() {
         <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', marginBottom:'24px', flexWrap:'wrap', gap:'12px'}}>
           <div>
             <h1 style={{fontSize:'22px', fontWeight:800, color:'#1A1A1A', marginBottom:'4px'}}>Dashboard Admin 📦</h1>
-            <p style={{fontSize:'13px', color:'#888'}}>{orders.length} commande{orders.length > 1 ? 's' : ''} au total</p>
+            <p style={{fontSize:'13px', color:'#1A1A1A'}}>{orders.length} commande{orders.length > 1 ? 's' : ''} au total</p>
           </div>
           <div style={{display:'flex', gap:'8px', flexWrap:'wrap'}}>
             <button onClick={() => setView('client')} style={{background: view === 'client' ? '#0ABFBC' : 'white', color: view === 'client' ? 'white' : '#0ABFBC', border:'2px solid #0ABFBC', padding:'8px 16px', borderRadius:'20px', fontSize:'12px', fontWeight:700, cursor:'pointer'}}>
@@ -147,7 +147,7 @@ export default function Admin() {
         {loading ? (
           <div style={{textAlign:'center', color:'#0ABFBC', fontWeight:700, padding:'40px'}}>Chargement... 🌀</div>
         ) : orders.length === 0 ? (
-          <div style={{textAlign:'center', padding:'60px', color:'#888'}}>
+          <div style={{textAlign:'center', padding:'60px', color:'#1A1A1A'}}>
             <div style={{fontSize:'48px', marginBottom:'12px'}}>📭</div>
             <div style={{fontSize:'16px', fontWeight:600}}>Aucune commande pour l'instant</div>
           </div>
@@ -161,7 +161,7 @@ export default function Admin() {
                     <div style={{background:'#FFD93D', color:'#854F0B', fontSize:'12px', fontWeight:800, padding:'4px 12px', borderRadius:'20px'}}>
                       {order.order_number || `CMD-${i+1}`}
                     </div>
-                    <div style={{fontSize:'11px', color:'#888'}}>{new Date(order.created_at).toLocaleDateString('fr-FR')}</div>
+                    <div style={{fontSize:'11px', color:'#1A1A1A'}}>{new Date(order.created_at).toLocaleDateString('fr-FR')}</div>
                   </div>
                   <div style={{display:'flex', gap:'8px'}}>
                     <div style={{background:'#E6FAFA', color:'#0ABFBC', padding:'4px 10px', borderRadius:'20px', fontSize:'12px', fontWeight:700}}>Taille {order.size}</div>
@@ -175,25 +175,25 @@ export default function Admin() {
                   <div style={{width:'120px', minWidth:'120px', border:'2px dashed #ddd', borderRadius:'8px', height:'150px', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', background:'#f9f9f9'}}>
                     <div style={{fontSize:'10px', color:'#ccc', marginBottom:'8px', textAlign:'center'}}>📷 Photo<br/>à venir</div>
                     <img src={`https://api.qrserver.com/v1/create-qr-code/?size=70x70&data=${encodeURIComponent(`${SITE_URL}/u/${order.user_id}`)}`} style={{width:'70px', height:'70px'}} />
-                    <div style={{fontSize:'9px', color:'#aaa', marginTop:'4px'}}>QR unique</div>
+                    <div style={{fontSize:'9px', color:'#555', marginTop:'4px'}}>QR unique</div>
                   </div>
 
                   <div style={{flex:1, display:'flex', flexDirection:'column', gap:'6px', fontSize:'13px'}}>
                     {view === 'client' ? (
                       <>
-                        <div><span style={{color:'#888'}}>👤 Nom : </span><strong>{order.name || '-'}</strong></div>
-                        <div><span style={{color:'#888'}}>✉️ Email : </span>{order.email || '-'}</div>
-                        <div><span style={{color:'#888'}}>📦 Adresse : </span>{order.address || '-'}</div>
-                        <div><span style={{color:'#888'}}>📏 Taille : </span><strong style={{fontSize:'18px', color:'#FF6B6B'}}>{order.size}</strong></div>
-                        <div style={{fontSize:'11px', color:'#aaa'}}>🔗 {SITE_URL}/u/{order.user_id}</div>
+                        <div><span style={{color:'#1A1A1A'}}>👤 Nom : </span><strong>{order.name || '-'}</strong></div>
+                        <div><span style={{color:'#1A1A1A'}}>✉️ Email : </span>{order.email || '-'}</div>
+                        <div><span style={{color:'#1A1A1A'}}>📦 Adresse : </span>{order.address || '-'}</div>
+                        <div><span style={{color:'#1A1A1A'}}>📏 Taille : </span><strong style={{fontSize:'18px', color:'#FF6B6B'}}>{order.size}</strong></div>
+                        <div style={{fontSize:'11px', color:'#555'}}>🔗 {SITE_URL}/u/{order.user_id}</div>
                       </>
                     ) : (
                       <>
-                        <div><span style={{color:'#888'}}>👤 Client : </span><strong>{order.name || '-'}</strong></div>
-                        <div><span style={{color:'#888'}}>📏 Taille : </span><strong style={{fontSize:'22px', color:'#FF6B6B'}}>{order.size}</strong></div>
-                        <div><span style={{color:'#888'}}>👕 Produit : </span>Tee-shirt (à définir)</div>
-                        <div><span style={{color:'#888'}}>🎨 Couleur : </span>À définir</div>
-                        <div style={{fontSize:'11px', color:'#aaa'}}>🔗 QR : {SITE_URL}/u/{order.user_id}</div>
+                        <div><span style={{color:'#1A1A1A'}}>👤 Client : </span><strong>{order.name || '-'}</strong></div>
+                        <div><span style={{color:'#1A1A1A'}}>📏 Taille : </span><strong style={{fontSize:'22px', color:'#FF6B6B'}}>{order.size}</strong></div>
+                        <div><span style={{color:'#1A1A1A'}}>👕 Produit : </span>Tee-shirt (à définir)</div>
+                        <div><span style={{color:'#1A1A1A'}}>🎨 Couleur : </span>À définir</div>
+                        <div style={{fontSize:'11px', color:'#555'}}>🔗 QR : {SITE_URL}/u/{order.user_id}</div>
                         <div style={{fontSize:'11px', color:'#FF6B6B', fontWeight:600, marginTop:'4px'}}>⚠️ QR code unique — ne pas dupliquer</div>
                       </>
                     )}
