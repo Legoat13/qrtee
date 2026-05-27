@@ -67,7 +67,7 @@ export default function Admin() {
     const html = `
       <html>
       <head>
-        <title>QRTEE — ${view === 'client' ? 'Fiches Clients' : 'Bon Fournisseur'}</title>
+        <title>FunShirt — ${view === 'client' ? 'Fiches Clients' : 'Bon Fournisseur'}</title>
         <style>
           * { margin: 0; padding: 0; box-sizing: border-box; }
           body { font-family: Arial, sans-serif; color: #1A1A1A; padding: 30px; }
@@ -84,14 +84,15 @@ export default function Admin() {
           .qr-label { font-size: 9px; color: #999; margin-top: 6px; }
           .details { flex: 1; }
           .detail-row { display: flex; margin-bottom: 10px; font-size: 13px; }
-          .detail-label { width: 120px; color: #555; font-weight: 600; }
+          .detail-label { width: 140px; color: #555; font-weight: 600; }
           .detail-value { font-weight: 700; }
           .taille { font-size: 24px; font-weight: 800; color: #FF6B6B; }
+          .premium-badge { background: #FFF8DC; color: #B8860B; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; display: inline-block; margin-left: 6px; }
           @media print { body { padding: 15px; } }
         </style>
       </head>
       <body>
-        <h1>👕 QRTEE — ${view === 'client' ? 'Fiches Clients' : 'Bon de Commande Fournisseur'}</h1>
+        <h1>👕 FunShirt — ${view === 'client' ? 'Fiches Clients' : 'Bon de Commande Fournisseur'}</h1>
         <p class="subtitle">Généré le ${new Date().toLocaleDateString('fr-FR', {day:'2-digit', month:'long', year:'numeric'})} · ${orders.length} commande${orders.length > 1 ? 's' : ''}</p>
         ${orders.map(o => `
           <div class="fiche">
@@ -112,15 +113,17 @@ export default function Admin() {
                   <div class="detail-row"><span class="detail-label">Adresse</span><span class="detail-value">${o.address || '-'}</span></div>
                   <div class="detail-row"><span class="detail-label">Taille</span><span class="detail-value taille">${o.size}</span></div>
                   <div class="detail-row"><span class="detail-label">Statut</span><span class="detail-value">${getStatusLabel(o.status)}</span></div>
+                  ${o.custom_text ? `<div class="detail-row"><span class="detail-label">Texte perso</span><span class="detail-value">"${o.custom_text}" — ${o.text_position || '-'}${o.is_premium ? '<span class="premium-badge">✨ Premium</span>' : ''}</span></div>` : ''}
                   <div class="detail-row"><span class="detail-label">QR code URL</span><span class="detail-value" style="font-size:11px;">${SITE_URL}/u/${o.user_id}</span></div>
                 ` : `
                   <div class="detail-row"><span class="detail-label">N° commande</span><span class="detail-value">${o.order_number || 'N/A'}</span></div>
                   <div class="detail-row"><span class="detail-label">Client</span><span class="detail-value">${o.name || '-'}</span></div>
                   <div class="detail-row"><span class="detail-label">Taille</span><span class="detail-value taille">${o.size}</span></div>
-                  <div class="detail-row"><span class="detail-label">Type produit</span><span class="detail-value">Tee-shirt (à définir)</span></div>
-                  <div class="detail-row"><span class="detail-label">Couleur</span><span class="detail-value">À définir</span></div>
+                  ${o.custom_text ? `<div class="detail-row"><span class="detail-label">Texte à imprimer</span><span class="detail-value">"${o.custom_text}"${o.is_premium ? '<span class="premium-badge">✨ Premium</span>' : ''}</span></div>
+                  <div class="detail-row"><span class="detail-label">Position texte</span><span class="detail-value">${o.text_position || '-'}</span></div>` : ''}
+                  <div class="detail-row"><span class="detail-label">Type produit</span><span class="detail-value">Tee-shirt FunShirt</span></div>
                   <div class="detail-row"><span class="detail-label">QR code URL</span><span class="detail-value" style="font-size:11px;">${SITE_URL}/u/${o.user_id}</span></div>
-                  <div class="detail-row"><span class="detail-label">Instructions</span><span class="detail-value" style="font-size:11px;">Imprimer le QR code au dos du tee-shirt. Chaque QR code est unique.</span></div>
+                  <div class="detail-row"><span class="detail-label">Instructions</span><span class="detail-value" style="font-size:11px;">Imprimer le QR code au dos. Chaque QR code est unique.</span></div>
                 `}
               </div>
             </div>
@@ -187,6 +190,7 @@ export default function Admin() {
                       {order.order_number || `CMD-${i+1}`}
                     </div>
                     <div style={{fontSize:'11px', color:'#1A1A1A'}}>{new Date(order.created_at).toLocaleDateString('fr-FR')}</div>
+                    {order.is_premium && <div style={{background:'#FFF8DC', color:'#B8860B', fontSize:'11px', fontWeight:700, padding:'3px 8px', borderRadius:'10px'}}>✨ Premium</div>}
                   </div>
                   <div style={{...getStatusStyle(order.status), padding:'4px 10px', borderRadius:'20px', fontSize:'12px', fontWeight:700}}>
                     {getStatusLabel(order.status)}
@@ -201,10 +205,7 @@ export default function Admin() {
                       onClick={() => updateStatus(order.id, s.key)}
                       disabled={order.status === s.key || updating === order.id + s.key}
                       style={{
-                        padding:'6px 12px',
-                        borderRadius:'20px',
-                        fontSize:'11px',
-                        fontWeight:700,
+                        padding:'6px 12px', borderRadius:'20px', fontSize:'11px', fontWeight:700,
                         cursor: order.status === s.key ? 'default' : 'pointer',
                         border: order.status === s.key ? `2px solid ${s.color}` : '1.5px solid #FFE8D6',
                         background: order.status === s.key ? s.bg : 'white',
@@ -231,14 +232,22 @@ export default function Admin() {
                         <div><span style={{color:'#1A1A1A'}}>✉️ Email : </span>{order.email || '-'}</div>
                         <div><span style={{color:'#1A1A1A'}}>📦 Adresse : </span>{order.address || '-'}</div>
                         <div><span style={{color:'#1A1A1A'}}>📏 Taille : </span><strong style={{fontSize:'18px', color:'#FF6B6B'}}>{order.size}</strong></div>
+                        {order.custom_text && (
+                          <div><span style={{color:'#1A1A1A'}}>✏️ Texte : </span><strong>"{order.custom_text}"</strong> — {order.text_position || '-'}</div>
+                        )}
                         <div style={{fontSize:'11px', color:'#555'}}>🔗 {SITE_URL}/u/{order.user_id}</div>
                       </>
                     ) : (
                       <>
                         <div><span style={{color:'#1A1A1A'}}>👤 Client : </span><strong>{order.name || '-'}</strong></div>
                         <div><span style={{color:'#1A1A1A'}}>📏 Taille : </span><strong style={{fontSize:'22px', color:'#FF6B6B'}}>{order.size}</strong></div>
-                        <div><span style={{color:'#1A1A1A'}}>👕 Produit : </span>Tee-shirt (à définir)</div>
-                        <div><span style={{color:'#1A1A1A'}}>🎨 Couleur : </span>À définir</div>
+                        {order.custom_text && (
+                          <>
+                            <div><span style={{color:'#1A1A1A'}}>✏️ Texte à imprimer : </span><strong>"{order.custom_text}"</strong></div>
+                            <div><span style={{color:'#1A1A1A'}}>📍 Position : </span>{order.text_position || '-'}{order.is_premium ? ' ✨ (placement précis fourni)' : ''}</div>
+                          </>
+                        )}
+                        <div><span style={{color:'#1A1A1A'}}>👕 Produit : </span>Tee-shirt FunShirt</div>
                         <div style={{fontSize:'11px', color:'#555'}}>🔗 QR : {SITE_URL}/u/{order.user_id}</div>
                         <div style={{fontSize:'11px', color:'#FF6B6B', fontWeight:600, marginTop:'4px'}}>⚠️ QR code unique — ne pas dupliquer</div>
                       </>
