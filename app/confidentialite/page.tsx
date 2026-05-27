@@ -13,7 +13,7 @@ export default function Confidentialite() {
             • Nom et prénom<br/>
             • Adresse email<br/>
             • Adresse postale de livraison<br/>
-            • Données de paiement (traitées directement par Stripe, non stockées par QRTEE)
+            • Données de paiement (traitées directement par Stripe, non stockées par FunShirt)
           </p>
         </section>
 

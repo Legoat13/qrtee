@@ -18,9 +18,9 @@ const statusLabels: Record<string, string> = {
 
 const statusMessages: Record<string, string> = {
   pending: 'Votre commande a bien été reçue et est en attente de traitement.',
-  production: 'Bonne nouvelle ! Votre tee-shirt QRTEE est en cours de production.',
+  production: 'Bonne nouvelle ! Votre tee-shirt FunShirt est en cours de production.',
   shipping: 'Votre tee-shirt est en route ! Vous le recevrez dans quelques jours.',
-  delivered: 'Votre tee-shirt QRTEE a été livré ! Nous espérons qu\'il vous plaît.',
+  delivered: 'Votre tee-shirt FunShirt a été livré ! Nous espérons qu\'il vous plaît.',
 }
 
 export async function POST(req: Request) {
@@ -37,12 +37,12 @@ export async function POST(req: Request) {
 
   if (order.email) {
     await resend.emails.send({
-      from: 'QRTEE <onboarding@resend.dev>',
+      from: 'FunShirt <onboarding@resend.dev>',
       to: order.email,
       subject: `Mise à jour de votre commande ${order.order_number} — ${statusLabels[status]}`,
       html: `
         <div style="font-family: sans-serif; max-width: 500px; margin: 0 auto; padding: 20px;">
-          <h1 style="color: #0ABFBC;">👕 QRTEE</h1>
+          <h1 style="color: #0ABFBC;">👕 FunShirt</h1>
           <h2 style="color: #1A1A1A;">Mise à jour de votre commande</h2>
           <div style="background: #F7F7F7; border-radius: 12px; padding: 20px; margin: 20px 0;">
             <p style="font-size: 16px; font-weight: 700; color: #1A1A1A;">${statusLabels[status]}</p>

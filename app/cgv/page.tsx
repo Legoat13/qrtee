@@ -29,7 +29,7 @@ export default function MentionsLegales() {
         <section style={{marginBottom:'32px'}}>
           <h2 style={{fontSize:'18px', fontWeight:700, color:'#1A1A1A', marginBottom:'12px'}}>Propriété intellectuelle</h2>
           <p style={{fontSize:'14px', color:'#1A1A1A', lineHeight:1.8}}>
-            L'ensemble du contenu de ce site (textes, images, logo, QR codes) est la propriété exclusive de QRTEE. 
+            L'ensemble du contenu de ce site (textes, images, logo, QR codes) est la propriété exclusive de FunShirt. 
             Toute reproduction, même partielle, est interdite sans autorisation préalable.
           </p>
         </section>

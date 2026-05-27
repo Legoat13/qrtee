@@ -63,7 +63,7 @@ export default function PublicPage() {
           </div>
         )}
         <div style={{fontSize:'11px', color:'#ccc', marginTop:'8px'}}>
-          Fait avec 👕 QRTEE
+          Fait avec 👕 FunShirt
         </div>
       </div>
     </main>

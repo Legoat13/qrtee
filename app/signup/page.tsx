@@ -32,7 +32,7 @@ export default function Signup() {
     <main style={{fontFamily:'sans-serif', background:'#FFFAF6', minHeight:'100vh', display:'flex', flexDirection:'column'}}>
       
       <nav style={{background:'#FFFAF6', padding:'10px 20px', display:'flex', justifyContent:'space-between', alignItems:'center', borderBottom:'1px solid #FFE8D6'}}>
-        <div style={{fontSize:'16px', fontWeight:800, color:'#0ABFBC'}}>👕 QRTEE</div>
+        <div style={{fontSize:'16px', fontWeight:800, color:'#0ABFBC'}}>👕 FunShirt</div>
       </nav>
 
       <div style={{flex:1, display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center', padding:'20px'}}>
