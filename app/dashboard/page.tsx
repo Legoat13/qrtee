@@ -91,7 +91,7 @@ export default function Dashboard() {
             onChange={e => setMessage(e.target.value)}
             placeholder="Écris ce que tu veux... un truc drôle, un secret, une déclaration 😜"
             rows={4}
-            style={{width:'100%', padding:'12px', borderRadius:'10px', border:'1.5px solid #FFE8D6', fontSize:'14px', outline:'none', resize:'none', boxSizing:'border-box', fontFamily:'sans-serif'}}
+            style={{width:'100%', padding:'12px', borderRadius:'10px', border:'1.5px solid #FFE8D6', fontSize:'14px', outline:'none', resize:'none', boxSizing:'border-box', fontFamily:'sans-serif', color:'#1A1A1A'}}
           />
         </div>
 
@@ -105,7 +105,7 @@ export default function Dashboard() {
             value={link}
             onChange={e => setLink(e.target.value)}
             placeholder="https://..."
-            style={{width:'100%', padding:'12px', borderRadius:'10px', border:'1.5px solid #FFE8D6', fontSize:'14px', outline:'none', boxSizing:'border-box'}}
+            style={{width:'100%', padding:'12px', borderRadius:'10px', border:'1.5px solid #FFE8D6', fontSize:'14px', outline:'none', boxSizing:'border-box', color:'#1A1A1A'}}
           />
         </div>
 
@@ -117,6 +117,15 @@ export default function Dashboard() {
         >
           {saved ? '✅ Sauvegardé !' : saving ? 'Sauvegarde...' : 'Publier mes modifications →'}
         </button>
+
+        {/* COMMANDER UN NOUVEAU */}
+        <a href="/order" style={{display:'block', textAlign:'center', marginTop:'12px', background:'#0ABFBC', color:'white', padding:'14px', borderRadius:'14px', fontSize:'14px', fontWeight:700, textDecoration:'none'}}>
+          👕 Commander un nouveau FunShirt →
+        </a>
+
+        <p style={{fontSize:'11px', color:'#1A1A1A', textAlign:'center', marginTop:'16px'}}>
+          Ton QR code est unique et permanent. Tu peux modifier ta page à vie.
+        </p>
 
       </div>
     </main>
