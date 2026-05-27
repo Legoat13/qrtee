@@ -14,7 +14,7 @@ export default function Success() {
         </h1>
         
         <p style={{fontSize:'13px', color:'#888', marginBottom:'24px', lineHeight:1.6}}>
-          Ton tee-shirt QRTEE est en cours de préparation. Tu recevras un email de confirmation avec le suivi de ta commande.
+          Ton tee-shirt FunShirt est en cours de préparation. Tu recevras un email de confirmation avec le suivi de ta commande.
         </p>
 
         <div style={{background:'#E6FAFA', borderRadius:'12px', padding:'16px', marginBottom:'24px'}}>

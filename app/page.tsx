@@ -37,6 +37,7 @@ export default function Home() {
         </p>
         <div style={{display:'flex', gap:'10px', justifyContent:'center', flexWrap:'wrap', marginBottom:'12px'}}>
           <a href="/order" style={{background:'#FF6B6B', color:'white', padding:'15px 30px', borderRadius:'13px', fontSize:'14px', fontWeight:500, cursor:'pointer', textDecoration:'none', display:'inline-block'}}>Commander — 24,99€ →</a>
+<a href="/signup" style={{background:'#0ABFBC', color:'white', padding:'15px 30px', borderRadius:'13px', fontSize:'14px', fontWeight:500, cursor:'pointer', textDecoration:'none', display:'inline-block'}}>Créer mon compte →</a>
           <button onClick={() => hiwRef.current?.scrollIntoView({behavior:'smooth'})} style={{background:'transparent', color:'white', border:'1.5px solid rgba(255,255,255,.18)', padding:'15px 30px', borderRadius:'13px', fontSize:'14px', cursor:'pointer', fontFamily:'sans-serif'}}>Comment ça marche ?</button>
         </div>
         <div style={{color:'rgba(255,255,255,.2)', fontSize:'12px', marginTop:'12px'}}>🔒 Paiement sécurisé · Livraison 5-7 jours · Apple Pay</div>
