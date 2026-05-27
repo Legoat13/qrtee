@@ -58,7 +58,7 @@ export default function Signup() {
               value={email}
               onChange={e => setEmail(e.target.value)}
               placeholder="ton@email.com"
-              style={{width:'100%', padding:'12px', borderRadius:'10px', border:'1.5px solid #FFE8D6', fontSize:'14px', outline:'none', boxSizing:'border-box'}}
+              style={{width:'100%', padding:'12px', borderRadius:'10px', border:'1.5px solid #FFE8D6', fontSize:'14px', outline:'none', boxSizing:'border-box', color:'#1A1A1A'}}
             />
           </div>
 
@@ -69,7 +69,7 @@ export default function Signup() {
               value={password}
               onChange={e => setPassword(e.target.value)}
               placeholder="minimum 6 caractères"
-              style={{width:'100%', padding:'12px', borderRadius:'10px', border:'1.5px solid #FFE8D6', fontSize:'14px', outline:'none', boxSizing:'border-box'}}
+              style={{width:'100%', padding:'12px', borderRadius:'10px', border:'1.5px solid #FFE8D6', fontSize:'14px', outline:'none', boxSizing:'border-box', color:'#1A1A1A'}}
             />
           </div>
 
@@ -83,6 +83,10 @@ export default function Signup() {
 
           <p style={{fontSize:'11px', color:'#1A1A1A', textAlign:'center', marginTop:'16px'}}>
             En créant un compte tu acceptes nos conditions d'utilisation
+          </p>
+
+          <p style={{fontSize:'12px', color:'#1A1A1A', textAlign:'center', marginTop:'12px'}}>
+            Déjà un compte ? <a href="/dashboard" style={{color:'#0ABFBC', fontWeight:700, textDecoration:'none'}}>Accéder au dashboard →</a>
           </p>
         </div>
       </div>
