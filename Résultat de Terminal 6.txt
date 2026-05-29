@@ -1,0 +1,433 @@
+Last login: Fri May 22 15:38:57 on ttys001
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 ~ % cd ~/Desktop/qrtee && git init && git add . && git commit -m "first commit"
+Reinitialized existing Git repository in /Users/arthurduyrat-petry/Desktop/qrtee/.git/
+[main b08efe0] first commit
+ Committer: Arthur Duyrat-Petry <arthurduyrat-petry@MacBook-Air-de-Arthur-2.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 11 files changed, 3609 insertions(+), 64 deletions(-)
+ create mode 100644 "R\303\251sultat de Terminal.txt"
+ create mode 100644 app/admin/page.tsx
+ create mode 100644 app/api/checkout/route.ts
+ create mode 100644 app/dashboard/page.tsx
+ create mode 100644 app/order/page.tsx
+ create mode 100644 app/signup/page.tsx
+ create mode 100644 app/success/page.tsx
+ create mode 100644 app/u/[id]/page.tsx
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % brew install gh
+zsh: command not found: brew
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+==> Checking for `sudo` access (which may request your password)...
+Password:
+Sorry, try again.
+Password:
+==> This script will install:
+/opt/homebrew/bin/brew
+/opt/homebrew/share/doc/homebrew
+/opt/homebrew/share/man/man1/brew.1
+/opt/homebrew/share/zsh/site-functions/_brew
+/opt/homebrew/etc/bash_completion.d/brew
+/opt/homebrew
+/etc/paths.d/homebrew
+==> The following new directories will be created:
+/opt/homebrew/bin
+/opt/homebrew/etc
+/opt/homebrew/include
+/opt/homebrew/lib
+/opt/homebrew/sbin
+/opt/homebrew/share
+/opt/homebrew/var
+/opt/homebrew/opt
+/opt/homebrew/share/zsh
+/opt/homebrew/share/zsh/site-functions
+/opt/homebrew/var/homebrew
+/opt/homebrew/var/homebrew/linked
+/opt/homebrew/Cellar
+/opt/homebrew/Caskroom
+/opt/homebrew/Frameworks
+
+Press RETURN/ENTER to continue or any other key to abort:
+==> /usr/bin/sudo /usr/bin/install -d -o root -g wheel -m 0755 /opt/homebrew
+==> /usr/bin/sudo /bin/mkdir -p /opt/homebrew/bin /opt/homebrew/etc /opt/homebrew/include /opt/homebrew/lib /opt/homebrew/sbin /opt/homebrew/share /opt/homebrew/var /opt/homebrew/opt /opt/homebrew/share/zsh /opt/homebrew/share/zsh/site-functions /opt/homebrew/var/homebrew /opt/homebrew/var/homebrew/linked /opt/homebrew/Cellar /opt/homebrew/Caskroom /opt/homebrew/Frameworks
+==> /usr/bin/sudo /bin/chmod ug=rwx /opt/homebrew/bin /opt/homebrew/etc /opt/homebrew/include /opt/homebrew/lib /opt/homebrew/sbin /opt/homebrew/share /opt/homebrew/var /opt/homebrew/opt /opt/homebrew/share/zsh /opt/homebrew/share/zsh/site-functions /opt/homebrew/var/homebrew /opt/homebrew/var/homebrew/linked /opt/homebrew/Cellar /opt/homebrew/Caskroom /opt/homebrew/Frameworks
+==> /usr/bin/sudo /bin/chmod go-w /opt/homebrew/share/zsh /opt/homebrew/share/zsh/site-functions
+==> /usr/bin/sudo /usr/sbin/chown arthurduyrat-petry /opt/homebrew/bin /opt/homebrew/etc /opt/homebrew/include /opt/homebrew/lib /opt/homebrew/sbin /opt/homebrew/share /opt/homebrew/var /opt/homebrew/opt /opt/homebrew/share/zsh /opt/homebrew/share/zsh/site-functions /opt/homebrew/var/homebrew /opt/homebrew/var/homebrew/linked /opt/homebrew/Cellar /opt/homebrew/Caskroom /opt/homebrew/Frameworks
+==> /usr/bin/sudo /usr/bin/chgrp admin /opt/homebrew/bin /opt/homebrew/etc /opt/homebrew/include /opt/homebrew/lib /opt/homebrew/sbin /opt/homebrew/share /opt/homebrew/var /opt/homebrew/opt /opt/homebrew/share/zsh /opt/homebrew/share/zsh/site-functions /opt/homebrew/var/homebrew /opt/homebrew/var/homebrew/linked /opt/homebrew/Cellar /opt/homebrew/Caskroom /opt/homebrew/Frameworks
+==> /usr/bin/sudo /usr/sbin/chown -R arthurduyrat-petry:admin /opt/homebrew
+==> Downloading and installing Homebrew...
+remote: Enumerating objects: 334788, done.
+remote: Counting objects: 100% (408/408), done.
+remote: Compressing objects: 100% (214/214), done.
+remote: Total 334788 (delta 264), reused 243 (delta 194), pack-reused 334380 (from 3)
+remote: Enumerating objects: 55, done.
+remote: Counting objects: 100% (34/34), done.
+remote: Total 55 (delta 34), reused 34 (delta 34), pack-reused 21 (from 1)
+==> /usr/bin/sudo /bin/mkdir -p /etc/paths.d
+==> /usr/bin/sudo tee /etc/paths.d/homebrew
+/opt/homebrew/bin
+==> /usr/bin/sudo /usr/sbin/chown root:wheel /etc/paths.d/homebrew
+==> /usr/bin/sudo /bin/chmod a+r /etc/paths.d/homebrew
+==> Updating Homebrew...
+==> Downloading https://ghcr.io/v2/homebrew/core/portable-ruby/blobs/sha256:d5dbe0bbfd7e00136344e7872fc26ad1db935cf7c6421c5888e42bab6cc2f6b3
+######################################################################### 100.0%
+==> Pouring portable-ruby-4.0.5.arm64_big_sur.bottle.tar.gz
+==> Installation successful!
+
+==> Homebrew has enabled anonymous aggregate formulae and cask analytics.
+Read the analytics documentation (and how to opt-out) here:
+  https://docs.brew.sh/Analytics
+No analytics data has been sent yet (nor will any be during this install run).
+
+==> Homebrew is run entirely by unpaid volunteers. Please consider donating:
+  https://github.com/Homebrew/brew#donations
+
+==> Next steps:
+- Run these commands in your terminal to add Homebrew to your PATH:
+    echo >> /Users/arthurduyrat-petry/.zprofile
+    echo 'eval "$(/opt/homebrew/bin/brew shellenv zsh)"' >> /Users/arthurduyrat-petry/.zprofile
+    eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+- Run brew help to get started
+- Further documentation:
+    https://docs.brew.sh
+
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % echo >> /Users/arthurduyrat-petry/.zprofile
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % echo 'eval "$(/opt/homebrew/bin/brew shellenv zsh)"' >> /Users/arthurduyrat-petry/.zprofile
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % brew install gh
+Inspect the formula dependency plan before installing with `brew install --ask`.
+Enable ask mode by setting `HOMEBREW_ASK=1`.
+Hide these hints with `HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+==> Fetching downloads for: gh
+✔︎ Bottle Manifest gh (2.92.0)                        Downloaded    7.3KB/  7.3KB
+✔︎ Bottle gh (2.92.0)                                 Downloaded   13.1MB/ 13.1MB
+==> Pouring gh--2.92.0.arm64_sequoia.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/gh/2.92.0: 229 files, 37.8MB
+==> Running `brew cleanup gh`...
+Disable this behaviour by setting `HOMEBREW_NO_INSTALL_CLEANUP=1`.
+Hide these hints with `HOMEBREW_NO_ENV_HINTS=1` (see `man brew`).
+==> Caveats
+zsh completions have been installed to:
+  /opt/homebrew/share/zsh/site-functions
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % gh auth login
+? Where do you use GitHub? GitHub.com
+? What is your preferred protocol for Git operations on this host? HTTPS
+? Authenticate Git with your GitHub credentials? Yes
+? How would you like to authenticate GitHub CLI? Login with a web browser
+
+! First copy your one-time code: C1A1-9EBC
+Press Enter to open https://github.com/login/device in your browser... 
+
+
+✓ Authentication complete.
+- gh config set -h github.com git_protocol https
+✓ Configured git protocol
+✓ Logged in as Legoat13
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % 
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % 
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % gh repo create qrtee --public --source=. --push
+✓ Created repository Legoat13/qrtee on github.com
+  https://github.com/Legoat13/qrtee
+✓ Added remote https://github.com/Legoat13/qrtee.git
+Enumerating objects: 46, done.
+Counting objects: 100% (46/46), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (36/36), done.
+Writing objects: 100% (46/46), 79.81 KiB | 15.96 MiB/s, done.
+Total 46 (delta 6), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (6/6), done.
+To https://github.com/Legoat13/qrtee.git
+ * [new branch]      HEAD -> main
+branch 'main' set up to track 'origin/main'.
+✓ Pushed commits to https://github.com/Legoat13/qrtee.git
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % 
+  [Restauré 26 mai 2026 à 11:18:40]
+Last login: Tue May 26 11:18:40 on ttys000
+Restored session: Mar 26 mai 2026 11:17:52 CEST
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % cd ~/Desktop/qrtee && npm run dev
+
+> qrtee@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://172.16.3.211:3000
+- Environments: .env.local
+✓ Ready in 212ms
+
+ GET /admin 200 in 198ms (next.js: 109ms, application-code: 89ms)
+ GET /admin 200 in 63ms (next.js: 5ms, application-code: 58ms)
+ GET /admin 200 in 26ms (next.js: 1641µs, application-code: 25ms)
+cd ~/Desktop/qrtee && git add . && git commit -m "dashboard admin ameliore" && git push
+✓ Compiled in 32ms
+✓ Compiled in 23ms
+[browser] GoTrueClient@sb-etrvgkwbejbzpuupkado-auth-token:1 (2.106.1) 2026-05-26T09:42:33.192Z Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key.
+[browser] GoTrueClient@sb-etrvgkwbejbzpuupkado-auth-token:2 (2.106.1) 2026-05-26T09:43:36.540Z Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key.
+ GET /admin 200 in 54ms (next.js: 11ms, application-code: 43ms)
+✓ Compiled in 20ms
+[browser] GoTrueClient@sb-etrvgkwbejbzpuupkado-auth-token:1 (2.106.1) 2026-05-26T09:55:47.899Z Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key.
+ GET /admin 200 in 45ms (next.js: 9ms, application-code: 36ms)
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] AuthRetryableFetchError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+ GET /admin 200 in 42ms (next.js: 7ms, application-code: 35ms)
+ GET /apple-touch-icon-precomposed.png 404 in 42ms (next.js: 21ms, application-code: 21ms)
+ GET /apple-touch-icon.png 404 in 17ms (next.js: 1184µs, application-code: 16ms)
+ GET /admin 200 in 43ms (next.js: 8ms, application-code: 35ms)
+  Reload env: .env.local
+ GET /admin 200 in 77ms (next.js: 57ms, application-code: 19ms)
+ GET /admin 200 in 83ms (next.js: 55ms, application-code: 28ms)
+ GET /admin 200 in 83ms (next.js: 66ms, application-code: 17ms)
+ GET /admin 200 in 86ms (next.js: 62ms, application-code: 25ms)
+ GET /admin 200 in 86ms (next.js: 75ms, application-code: 11ms)
+ GET /admin 200 in 87ms (next.js: 40ms, application-code: 46ms)
+ GET /admin 200 in 126ms (next.js: 109ms, application-code: 17ms)
+ GET /admin 200 in 31ms (next.js: 877µs, application-code: 30ms)
+ GET /admin 200 in 31ms (next.js: 6ms, application-code: 25ms)
+ GET /admin 200 in 31ms (next.js: 10ms, application-code: 20ms)
+ GET /admin 200 in 16ms (next.js: 776µs, application-code: 15ms)
+ GET /admin 200 in 16ms (next.js: 5ms, application-code: 11ms)
+ GET /admin 200 in 16ms (next.js: 9ms, application-code: 7ms)
+ GET /admin 200 in 31ms (next.js: 766µs, application-code: 30ms)
+ GET /admin 200 in 25ms (next.js: 5ms, application-code: 20ms)
+ GET /admin 200 in 25ms (next.js: 9ms, application-code: 16ms)
+ GET /admin 200 in 25ms (next.js: 13ms, application-code: 12ms)
+ GET /admin 200 in 26ms (next.js: 846µs, application-code: 25ms)
+ GET /admin 200 in 25ms (next.js: 20ms, application-code: 6ms)
+ GET /admin 200 in 26ms (next.js: 614µs, application-code: 25ms)
+ GET /admin 200 in 20ms (next.js: 6ms, application-code: 15ms)
+ GET /admin 200 in 21ms (next.js: 1019µs, application-code: 20ms)
+ GET /admin 200 in 21ms (next.js: 11ms, application-code: 9ms)
+✓ Compiled in 18ms
+ GET /admin 200 in 92ms (next.js: 13ms, application-code: 79ms)
+ GET /admin 200 in 32ms (next.js: 3ms, application-code: 30ms)
+ POST /api/update-status 404 in 668ms (next.js: 395ms, application-code: 273ms)
+ POST /api/update-status 404 in 73ms (next.js: 1927µs, application-code: 71ms)
+ POST /api/update-status 404 in 76ms (next.js: 4ms, application-code: 72ms)
+ POST /api/update-status 404 in 80ms (next.js: 4ms, application-code: 77ms)
+ POST /api/update-status 404 in 86ms (next.js: 5ms, application-code: 81ms)
+ POST /api/update-status 404 in 82ms (next.js: 3ms, application-code: 79ms)
+ POST /api/update-status 404 in 94ms (next.js: 1848µs, application-code: 92ms)
+ POST /api/update-status 404 in 80ms (next.js: 3ms, application-code: 77ms)
+ POST /api/update-status 404 in 548ms (next.js: 3ms, application-code: 545ms)
+ POST /api/update-status 404 in 80ms (next.js: 3ms, application-code: 78ms)
+ POST /api/update-status 404 in 507ms (next.js: 8ms, application-code: 499ms)
+ POST /api/update-status 404 in 112ms (next.js: 4ms, application-code: 108ms)
+
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % cd ~/Desktop/qrtee && git add . && git commit -m "dashboard admin ameliore" && git push
+[main 171a84d] dashboard admin ameliore
+ Committer: Arthur Duyrat-Petry <arthurduyrat-petry@MacBook-Air-de-Arthur-2.local>
+Your name and email address were configured automatically based
+on your username and hostname. Please check that they are accurate.
+You can suppress this message by setting them explicitly. Run the
+following command and follow the instructions in your editor to edit
+your configuration file:
+
+    git config --global --edit
+
+After doing this, you may fix the identity used for this commit with:
+
+    git commit --amend --reset-author
+
+ 2 files changed, 502 insertions(+)
+ create mode 100644 "R\303\251sultat de Terminal 4.txt"
+ create mode 100644 "R\303\251sultat de Terminal 5.txt"
+Enumerating objects: 4, done.
+Counting objects: 100% (4/4), done.
+Delta compression using up to 10 threads
+Compressing objects: 100% (3/3), done.
+Writing objects: 100% (3/3), 3.87 KiB | 3.87 MiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0), pack-reused 0
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To https://github.com/Legoat13/qrtee.git
+   d0f87ce..171a84d  main -> main
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % cd ~/Desktop/qrtee && git add . && git commit -m "suivi commandes statuts emails" && git push
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % cd ~/Desktop/qrtee && git add app/api/update-status/route.ts && git commit -m "api update status" && git push 
+On branch main
+Your branch is up to date with 'origin/main'.
+
+nothing to commit, working tree clean
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % npm run dev
+
+> qrtee@0.1.0 dev
+> next dev
+
+⚠ Port 3000 is in use by process 3264, using available port 3001 instead.
+▲ Next.js 16.2.6 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://172.16.3.211:3001
+- Environments: .env.local
+✓ Ready in 241ms
+⨯ Another next dev server is already running.
+
+- Local:        http://localhost:3000
+- PID:          3264
+- Dir:          /Users/arthurduyrat-petry/Desktop/qrtee
+- Log:          .next/dev/logs/next-development.log
+
+Run kill 3264 to stop it.
+
+arthurduyrat-petry@MacBook-Air-de-Arthur-2 qrtee % kill 3264 && npm run dev
+
+> qrtee@0.1.0 dev
+> next dev
+
+▲ Next.js 16.2.6 (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://172.16.3.211:3000
+- Environments: .env.local
+✓ Ready in 119ms
+
+ GET /admin 200 in 149ms (next.js: 69ms, application-code: 80ms)
+ GET /admin 200 in 19ms (next.js: 1416µs, application-code: 18ms)
+ GET / 200 in 191ms (next.js: 179ms, application-code: 12ms)
+ GET /admin 200 in 48ms (next.js: 7ms, application-code: 40ms)
+ GET /apple-touch-icon.png 404 in 71ms (next.js: 37ms, application-code: 34ms)
+ GET /apple-touch-icon-precomposed.png 404 in 75ms (next.js: 54ms, application-code: 21ms)
+ GET /admin 200 in 35ms (next.js: 3ms, application-code: 32ms)
+ GET /admin 200 in 17ms (next.js: 959µs, application-code: 16ms)
+ POST /api/update-status 200 in 345ms (next.js: 94ms, application-code: 251ms)
+ POST /api/update-status 200 in 97ms (next.js: 4ms, application-code: 92ms)
+ POST /api/update-status 200 in 207ms (next.js: 5ms, application-code: 201ms)
+ POST /api/update-status 200 in 95ms (next.js: 5ms, application-code: 90ms)
+ POST /api/update-status 200 in 79ms (next.js: 4ms, application-code: 75ms)
+ POST /api/update-status 200 in 268ms (next.js: 3ms, application-code: 265ms)
+✓ Compiled in 60ms
+✓ Compiled in 24ms
+cd ~/Desktop/qrtee && git add . && git commit -m "mentions legales cgv confidentialite" && git push
+
+✓ Compiled in 23ms
+ GET /admin 200 in 15ms (next.js: 10ms, application-code: 5ms)
+ GET /admin 200 in 170ms (next.js: 77ms, application-code: 93ms)
+ GET /admin 200 in 30ms (next.js: 15ms, application-code: 14ms)
+ GET /admin 200 in 32ms (next.js: 3ms, application-code: 29ms)
+ GET /admin 200 in 45ms (next.js: 1751µs, application-code: 43ms)
+✓ Compiled in 262ms
+ GET / 200 in 110ms (next.js: 66ms, application-code: 44ms)
+ GET / 200 in 33ms (next.js: 3ms, application-code: 30ms)
+ GET /order 200 in 90ms (next.js: 44ms, application-code: 45ms)
+ POST /api/checkout 200 in 1297ms (next.js: 91ms, application-code: 1206ms)
+ GET /order 200 in 54ms (next.js: 6ms, application-code: 49ms)
+✓ Compiled in 47ms
+ GET / 200 in 50ms (next.js: 12ms, application-code: 38ms)
+✓ Compiled in 83ms
+ GET / 200 in 48ms (next.js: 8ms, application-code: 41ms)
+ GET / 200 in 38ms (next.js: 2ms, application-code: 36ms)
+ GET /order 200 in 49ms (next.js: 10ms, application-code: 39ms)
+✓ Compiled in 21ms
+ GET / 200 in 46ms (next.js: 8ms, application-code: 38ms)
+ GET /signup 200 in 356ms (next.js: 340ms, application-code: 15ms)
+ GET /order 200 in 47ms (next.js: 6ms, application-code: 41ms)
+ GET / 200 in 49ms (next.js: 9ms, application-code: 41ms)
+ GET / 200 in 37ms (next.js: 2ms, application-code: 35ms)
+ GET /order 200 in 43ms (next.js: 5ms, application-code: 38ms)
+ GET /signup 200 in 43ms (next.js: 8ms, application-code: 35ms)
+ GET /dashboard 200 in 52ms (next.js: 38ms, application-code: 14ms)
+[browser] GoTrueClient@sb-etrvgkwbejbzpuupkado-auth-token:1 (2.106.1) 2026-05-27T07:34:25.757Z Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key. (app/dashboard/page.tsx:6:30)
+✓ Compiled in 27ms
+[browser] GoTrueClient@sb-etrvgkwbejbzpuupkado-auth-token:2 (2.106.1) 2026-05-27T07:39:09.991Z Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key.
+[browser] GoTrueClient@sb-etrvgkwbejbzpuupkado-auth-token:3 (2.106.1) 2026-05-27T07:39:09.993Z Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key.
+✓ Compiled in 24ms
+[browser] GoTrueClient@sb-etrvgkwbejbzpuupkado-auth-token:4 (2.106.1) 2026-05-27T07:41:13.779Z Multiple GoTrueClient instances detected in the same browser context. It is not an error, but this should be avoided as it may produce undefined behavior when used concurrently under the same storage key.
+ GET /dashboard 200 in 32ms (next.js: 9ms, application-code: 23ms)
+ GET /order 200 in 43ms (next.js: 5ms, application-code: 38ms)
+ GET /dashboard 200 in 57ms (next.js: 11ms, application-code: 47ms)
+ GET /u/81f1dca1-44d6-4db9-b460-080e75e10d59 200 in 384ms (next.js: 370ms, application-code: 15ms)
+ GET /admin 200 in 68ms (next.js: 29ms, application-code: 39ms)
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] AuthRetryableFetchError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] AuthRetryableFetchError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+[browser] TypeError: Load failed
+

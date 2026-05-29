@@ -19,6 +19,9 @@ const STATUSES = [
 
 export default function Admin() {
   const [orders, setOrders] = useState<any[]>([])
+  const [messages, setMessages] = useState<any[]>([])
+  const [replyText, setReplyText] = useState<{[key: string]: string}>({})
+  const [sendingReply, setSendingReply] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [auth, setAuth] = useState(false)
   const [password, setPassword] = useState('')
@@ -36,6 +39,8 @@ export default function Admin() {
     const getOrders = async () => {
       const { data } = await supabase.from('orders').select('*').order('created_at', { ascending: false })
       setOrders(data || [])
+      const { data: msgs } = await supabase.from('messages').select('*').order('created_at', { ascending: true })
+      setMessages(msgs || [])
       setLoading(false)
     }
     getOrders()
@@ -52,6 +57,21 @@ export default function Admin() {
       setOrders(prev => prev.map(o => o.id === orderId ? { ...o, status } : o))
     }
     setUpdating(null)
+  }
+
+  const sendReply = async (orderId: string, userId: string) => {
+    if (!replyText[orderId]?.trim()) return
+    setSendingReply(orderId)
+    await supabase.from('messages').insert({
+      order_id: orderId,
+      user_id: userId,
+      content: replyText[orderId].trim(),
+      sender: 'admin'
+    })
+    const { data: msgs } = await supabase.from('messages').select('*').order('created_at', { ascending: true })
+    setMessages(msgs || [])
+    setReplyText(prev => ({...prev, [orderId]: ''}))
+    setSendingReply(null)
   }
 
   const getStatusStyle = (status: string) => {
@@ -119,8 +139,10 @@ export default function Admin() {
                   <div class="detail-row"><span class="detail-label">N° commande</span><span class="detail-value">${o.order_number || 'N/A'}</span></div>
                   <div class="detail-row"><span class="detail-label">Client</span><span class="detail-value">${o.name || '-'}</span></div>
                   <div class="detail-row"><span class="detail-label">Taille</span><span class="detail-value taille">${o.size}</span></div>
-                  ${o.custom_text ? `<div class="detail-row"><span class="detail-label">Texte à imprimer</span><span class="detail-value">"${o.custom_text}"${o.is_premium ? '<span class="premium-badge">✨ Premium</span>' : ''}</span></div>
-                  <div class="detail-row"><span class="detail-label">Position texte</span><span class="detail-value">${o.text_position || '-'}</span></div>` : ''}
+                  ${o.custom_text ? `
+                    <div class="detail-row"><span class="detail-label">Texte à imprimer</span><span class="detail-value">"${o.custom_text}"${o.is_premium ? '<span class="premium-badge">✨ Premium</span>' : ''}</span></div>
+                    <div class="detail-row"><span class="detail-label">Position texte</span><span class="detail-value">${o.text_position || '-'}</span></div>
+                  ` : ''}
                   <div class="detail-row"><span class="detail-label">Type produit</span><span class="detail-value">Tee-shirt FunShirt</span></div>
                   <div class="detail-row"><span class="detail-label">QR code URL</span><span class="detail-value" style="font-size:11px;">${SITE_URL}/u/${o.user_id}</span></div>
                   <div class="detail-row"><span class="detail-label">Instructions</span><span class="detail-value" style="font-size:11px;">Imprimer le QR code au dos. Chaque QR code est unique.</span></div>
@@ -191,6 +213,11 @@ export default function Admin() {
                     </div>
                     <div style={{fontSize:'11px', color:'#1A1A1A'}}>{new Date(order.created_at).toLocaleDateString('fr-FR')}</div>
                     {order.is_premium && <div style={{background:'#FFF8DC', color:'#B8860B', fontSize:'11px', fontWeight:700, padding:'3px 8px', borderRadius:'10px'}}>✨ Premium</div>}
+                    {messages.filter(m => m.order_id === order.id && m.sender === 'client').length > 0 && (
+                      <div style={{background:'#FFEAEA', color:'#FF4444', fontSize:'11px', fontWeight:700, padding:'3px 8px', borderRadius:'10px'}}>
+                        💬 {messages.filter(m => m.order_id === order.id && m.sender === 'client').length} msg
+                      </div>
+                    )}
                   </div>
                   <div style={{...getStatusStyle(order.status), padding:'4px 10px', borderRadius:'20px', fontSize:'12px', fontWeight:700}}>
                     {getStatusLabel(order.status)}
@@ -200,19 +227,13 @@ export default function Admin() {
                 {/* BOUTONS STATUT */}
                 <div style={{display:'flex', gap:'6px', flexWrap:'wrap', marginBottom:'16px', paddingBottom:'16px', borderBottom:'1px solid #FFE8D6'}}>
                   {STATUSES.map(s => (
-                    <button
-                      key={s.key}
-                      onClick={() => updateStatus(order.id, s.key)}
-                      disabled={order.status === s.key || updating === order.id + s.key}
-                      style={{
-                        padding:'6px 12px', borderRadius:'20px', fontSize:'11px', fontWeight:700,
-                        cursor: order.status === s.key ? 'default' : 'pointer',
+                    <button key={s.key} onClick={() => updateStatus(order.id, s.key)} disabled={order.status === s.key || updating === order.id + s.key}
+                      style={{padding:'6px 12px', borderRadius:'20px', fontSize:'11px', fontWeight:700, cursor: order.status === s.key ? 'default' : 'pointer',
                         border: order.status === s.key ? `2px solid ${s.color}` : '1.5px solid #FFE8D6',
                         background: order.status === s.key ? s.bg : 'white',
                         color: order.status === s.key ? s.color : '#1A1A1A',
                         opacity: updating === order.id + s.key ? 0.6 : 1
-                      }}
-                    >
+                      }}>
                       {updating === order.id + s.key ? '...' : s.label}
                     </button>
                   ))}
@@ -232,9 +253,7 @@ export default function Admin() {
                         <div><span style={{color:'#1A1A1A'}}>✉️ Email : </span>{order.email || '-'}</div>
                         <div><span style={{color:'#1A1A1A'}}>📦 Adresse : </span>{order.address || '-'}</div>
                         <div><span style={{color:'#1A1A1A'}}>📏 Taille : </span><strong style={{fontSize:'18px', color:'#FF6B6B'}}>{order.size}</strong></div>
-                        {order.custom_text && (
-                          <div><span style={{color:'#1A1A1A'}}>✏️ Texte : </span><strong>"{order.custom_text}"</strong> — {order.text_position || '-'}</div>
-                        )}
+                        {order.custom_text && <div><span style={{color:'#1A1A1A'}}>✏️ Texte : </span><strong>"{order.custom_text}"</strong> — {order.text_position}</div>}
                         <div style={{fontSize:'11px', color:'#555'}}>🔗 {SITE_URL}/u/{order.user_id}</div>
                       </>
                     ) : (
@@ -243,15 +262,65 @@ export default function Admin() {
                         <div><span style={{color:'#1A1A1A'}}>📏 Taille : </span><strong style={{fontSize:'22px', color:'#FF6B6B'}}>{order.size}</strong></div>
                         {order.custom_text && (
                           <>
-                            <div><span style={{color:'#1A1A1A'}}>✏️ Texte à imprimer : </span><strong>"{order.custom_text}"</strong></div>
-                            <div><span style={{color:'#1A1A1A'}}>📍 Position : </span>{order.text_position || '-'}{order.is_premium ? ' ✨ (placement précis fourni)' : ''}</div>
+                            <div><span style={{color:'#1A1A1A'}}>✏️ Texte : </span><strong>"{order.custom_text}"</strong></div>
+                            <div><span style={{color:'#1A1A1A'}}>📍 Position : </span>{order.text_position}{order.is_premium ? ' ✨' : ''}</div>
                           </>
                         )}
                         <div><span style={{color:'#1A1A1A'}}>👕 Produit : </span>Tee-shirt FunShirt</div>
-                        <div style={{fontSize:'11px', color:'#555'}}>🔗 QR : {SITE_URL}/u/{order.user_id}</div>
-                        <div style={{fontSize:'11px', color:'#FF6B6B', fontWeight:600, marginTop:'4px'}}>⚠️ QR code unique — ne pas dupliquer</div>
+                        <div style={{fontSize:'11px', color:'#555'}}>🔗 {SITE_URL}/u/{order.user_id}</div>
+                        <div style={{fontSize:'11px', color:'#FF6B6B', fontWeight:600}}>⚠️ QR code unique — ne pas dupliquer</div>
                       </>
                     )}
+                  </div>
+                </div>
+
+                {/* MESSAGES */}
+                <div style={{marginTop:'16px', borderTop:'1px solid #FFE8D6', paddingTop:'16px'}}>
+                  <div style={{fontSize:'12px', fontWeight:700, color:'#1A1A1A', marginBottom:'10px'}}>
+                    💬 Messages
+                    {messages.filter(m => m.order_id === order.id && m.sender === 'client').length > 0 && (
+                      <span style={{background:'#FF6B6B', color:'white', fontSize:'10px', padding:'2px 6px', borderRadius:'10px', marginLeft:'6px'}}>
+                        {messages.filter(m => m.order_id === order.id && m.sender === 'client').length}
+                      </span>
+                    )}
+                  </div>
+
+                  {messages.filter(m => m.order_id === order.id).length === 0 ? (
+                    <div style={{fontSize:'12px', color:'#ccc', fontStyle:'italic'}}>Aucun message pour cette commande</div>
+                  ) : (
+                    <div style={{display:'flex', flexDirection:'column', gap:'6px', maxHeight:'200px', overflowY:'auto', marginBottom:'10px'}}>
+                      {messages.filter(m => m.order_id === order.id).map((m: any) => (
+                        <div key={m.id} style={{display:'flex', justifyContent: m.sender === 'admin' ? 'flex-end' : 'flex-start'}}>
+                          <div style={{
+                            maxWidth:'75%', padding:'8px 12px', borderRadius:'10px', fontSize:'12px',
+                            background: m.sender === 'client' ? '#FFF3E0' : '#E6FAFA',
+                            color: m.sender === 'client' ? '#FF6B00' : '#0ABFBC',
+                            border: m.sender === 'client' ? '1px solid #FFE0B2' : '1px solid #B2EBF2'
+                          }}>
+                            <div style={{fontWeight:700, marginBottom:'2px', fontSize:'11px'}}>{m.sender === 'client' ? '👤 Client' : '👕 FunShirt'}</div>
+                            {m.content}
+                            <div style={{fontSize:'10px', opacity:0.6, marginTop:'3px'}}>
+                              {new Date(m.created_at).toLocaleTimeString('fr-FR', {hour:'2-digit', minute:'2-digit'})}
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+
+                  <div style={{display:'flex', gap:'8px'}}>
+                    <input
+                      type="text"
+                      value={replyText[order.id] || ''}
+                      onChange={e => setReplyText(prev => ({...prev, [order.id]: e.target.value}))}
+                      onKeyDown={e => e.key === 'Enter' && sendReply(order.id, order.user_id)}
+                      placeholder="Répondre au client..."
+                      style={{flex:1, padding:'8px 12px', borderRadius:'8px', border:'1.5px solid #FFE8D6', fontSize:'12px', outline:'none', color:'#1A1A1A', fontFamily:'sans-serif'}}
+                    />
+                    <button onClick={() => sendReply(order.id, order.user_id)} disabled={sendingReply === order.id}
+                      style={{background:'#0ABFBC', color:'white', border:'none', padding:'8px 14px', borderRadius:'8px', fontSize:'12px', fontWeight:700, cursor:'pointer', fontFamily:'sans-serif'}}>
+                      {sendingReply === order.id ? '...' : '→'}
+                    </button>
                   </div>
                 </div>
 
